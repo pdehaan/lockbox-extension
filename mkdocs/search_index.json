@@ -1,0 +1,19 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Welcome to Lockbox's Docs\n\n\nCommands\n\n\n\n\nCtrl-Shift-L\n: open Lockbox sidebar", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#welcome-to-lockboxs-docs", 
+            "text": "", 
+            "title": "Welcome to Lockbox's Docs"
+        }, 
+        {
+            "location": "/#commands", 
+            "text": "Ctrl-Shift-L : open Lockbox sidebar", 
+            "title": "Commands"
+        }
+    ]
+}
