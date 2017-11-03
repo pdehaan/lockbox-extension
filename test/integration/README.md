@@ -22,12 +22,11 @@ The tests expect the webextension to be built. If not you will receive an error 
 addon or webextension is not found. 
 
 ```bash
-npm run prepackage
 npm run package
 ```
 
 ### Run the tests
-The tests must be run in Firefox 48 or later.
+The tests must be run in Firefox 56 or later.
 
 1. Install [Tox].
 2. Download geckodriver [v0.19.0][geckodriver] or later and ensure it's executable and

@@ -1,6 +1,3 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Login page locators and functions."""
 
 from pypom import Page
@@ -19,7 +16,7 @@ class Login(Page):
     def wait_for_page_to_load(self):
         """Page load wait."""
         self.wait.until(
-            lambda s: any(s.find_elements(*self._password_locator)))
+            lambda s: s.find_elements(*self._password_locator))
         return self
 
     def login(self, password):

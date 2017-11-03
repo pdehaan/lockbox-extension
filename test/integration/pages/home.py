@@ -1,6 +1,3 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Representation of the Home page for lockbox."""
 
 from pypom import Page, Region
@@ -59,3 +56,23 @@ class Entry(Region):
     def name(self):
         """Return the name of the entry."""
         return self.find_element(*self._name_locator).text
+
+    def click(self):
+        """Click on the entry."""
+        self.root.click()
+        return self.EntryDetail(self)
+
+    class EntryDetail(Region):
+        """Entry detail locators and functions."""
+
+        _delete_entry_locator = (By.CSS_SELECTOR,
+                                 'article div menu '
+                                 'button.button__minimal___pclTr')
+        _delete_entry_modal_locator = (By.CSS_SELECTOR,
+                                       '.ReactModal__Content--after-open '
+                                       'menu button.button__button___267m4')
+
+        def delete(self):
+            """Delete an entry from the lockbox."""
+            self.find_element(*self._delete_entry_locator).click()
+            self.find_element(*self._delete_entry_modal_locator).click()
