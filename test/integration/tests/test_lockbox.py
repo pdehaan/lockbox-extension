@@ -14,7 +14,7 @@ def test_add_entry(home_page):
     """Add a new entry."""
     home_page.add_entry()
     assert len(home_page.entries) == 1
-    assert home_page.entries[0].name == '(No Entry Name)'
+    assert home_page.entries[0].name in '(No Entry Name)'
 
 
 def test_delete_entry(home_page):
