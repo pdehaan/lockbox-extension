@@ -3,24 +3,44 @@
 from pypom import Page, Region
 from selenium.webdriver.common.by import By
 
+import hashlib
+import os
+from functools import reduce
+
+table = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_'
+
+def munged_class_name(path, name):
+    h = hashlib.md5((path + '+' + name).encode('utf-8')).digest()
+    i = reduce(lambda x, y: x * 256 + y, reversed(h), 0)
+    s = ''
+    while i > 0:
+        s = table[i % 64] + s
+        i //= 64
+ 
+    return (
+        os.path.splitext(os.path.basename(path))[0] + '__' +
+        name + '___' +
+        s[:5]
+    )
 
 class Home(Page):
     """Contain the locators and actions relating to the home page."""
 
     _entries_locator = (By.CSS_SELECTOR,
-                        'ul li div.item-summary__item-summary___2v2KL')
-    _lockie_locator = (By.CLASS_NAME, 'homepage__homepage___2CPGF')
+                        'ul li div.{}'.format(munged_class_name('webextension/manage/components/item-summary.css', 'item-summary')))
+    _lockie_locator = (By.CSS_SELECTOR,
+                       munged_class_name('webextension/manage/components/homepage.css', 'homepage'))
     _delete_entry_locator = (By.CSS_SELECTOR,
                              'article div menu '
-                             'button.button__minimal___pclTr')
+                             'button.{}'.format(munged_class_name('webextension/widgets/button.css', 'minimal')))
     _delete_entry_modal_locator = (By.CSS_SELECTOR,
                                    '.ReactModal__Content--after-open '
-                                   'menu button.button__button___267m4')
+                                   'menu button.{}'.format(munged_class_name('webextension/widgets/button.css', 'button')))
     _new_entry_locator = (By.CSS_SELECTOR,
                           'section menu '
-                          'button.button__button___267m4:nth-child(3)')
+                          'button.{}:nth-child(3)'.format(munged_class_name('webextension/widgets/button.css', 'button')))
     _save_entry_locator = (By.CSS_SELECTOR, 'article div form menu '
-                           'button.button__button___267m4')
+                           'button.{}'.format(munged_class_name('webextension/widgets/button.css', 'button')))
 
     @property
     def lockie(self):
@@ -50,7 +70,7 @@ class Home(Page):
 class Entry(Region):
     """Entry specific locators and functions."""
 
-    _name_locator = (By.CSS_SELECTOR, 'div.item-summary__title___4iGCw')
+    _name_locator = (By.CSS_SELECTOR, 'div.{}'.format(munged_class_name('webextension/manage/components/item-summary.css', 'title')))
 
     @property
     def name(self):
@@ -67,10 +87,10 @@ class Entry(Region):
 
         _delete_entry_locator = (By.CSS_SELECTOR,
                                  'article div menu '
-                                 'button.button__minimal___pclTr')
+                                 'button.{}'.format(munged_class_name('webextension/widgets/button.css', 'minimal')))
         _delete_entry_modal_locator = (By.CSS_SELECTOR,
                                        '.ReactModal__Content--after-open '
-                                       'menu button.button__button___267m4')
+                                       'menu button.{}'.format(munged_class_name('webextension/widgets/button.css', 'button')))
 
         def delete(self):
             """Delete an entry from the lockbox."""

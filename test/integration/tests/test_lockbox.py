@@ -9,6 +9,7 @@ def test_login(login_page):
 
 def test_add_entry(home_page):
     """Add a new entry."""
+    assert len(home_page.entries) == 0
     home_page.add_entry()
     assert len(home_page.entries) == 1
     assert '(No Entry Name)' in home_page.entries[0].name
